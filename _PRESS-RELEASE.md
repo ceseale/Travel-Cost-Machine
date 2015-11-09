@@ -18,27 +18,28 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
-
+  360 Traveling Cost Machine
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
-
+  For those traveling on a tight bugdet and sill want to get somewhere.
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-
+  Currently when you Google Map something you get an estimate of how long it will take you get to one place without any idea of how much it will cost for you to get there. There is cost to everything and driving isn't cheap. When your on your last few dollars and looking for a good time you need to know how far you can get with your money. 360 Cost Machine will you tell that.
 ## Problem ##
   > Describe the problem your product solves.
-
+  Getting in your car not knowing how far you can get.
 ## Solution ##
   > Describe how your product elegantly solves the problem.
-
+  Visulally provides a 360 area of how far you can get with given your car and location.
 ## Quote from You ##
   > A quote from a spokesperson in your company.
-
+  It's great -- Colin Seale CEO
 ## How to Get Started ##
   > Describe how easy it is to get started.
-
+  Just put in your car's data and click the location.
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-
+  I'm perpetually broke and never know how where I can go and not run out of gas. Now I do. -- Local Broke Dude
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  Use it! Compare cars and plan trips.
