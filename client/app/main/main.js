@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('201510MvpApp')
-  .config(function ($stateProvider) {
-    $stateProvider
-      .state('main', {
-        url: '/',
+  .config(function($routeProvider) {
+    $routeProvider
+      .when('/', {
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });

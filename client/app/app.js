@@ -4,12 +4,15 @@ angular.module('201510MvpApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.router',
-  'ui.bootstrap'
+  'ngRoute',
+  'ui.bootstrap',
+  'ngMaterial'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+  .config(function($routeProvider, $locationProvider) {
+    $routeProvider
+      .otherwise({
+        redirectTo: '/'
+      });
 
     $locationProvider.html5Mode(true);
   });
