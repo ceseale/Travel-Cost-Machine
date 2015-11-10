@@ -85,7 +85,7 @@ var getPolygons = function (center, time, resolution, network, carData , maxCost
               }
             });
           } else {
-            console.log(getTripCost(res.route_summary.total_distance, carData, res.route_summary.total_time) + "Time : " + res.route_summary.total_time);
+            // console.log(getTripCost(res.route_summary.total_distance, carData, res.route_summary.total_time) + "Time : " + res.route_summary.total_time);
             if (getTripCost(res.route_summary.total_distance, carData, res.route_summary.total_time) <= ((maxCost/5.0)) * 1 ){
                 gridData.push({x: query.coordinates[1][1],
              y: query.coordinates[1][0],
@@ -227,6 +227,17 @@ function stripCarData ( req, callback ){
 
 }
 
+var getGasPrices = function(lat, lng, fuelType){
+
+  request( config.GAS_FEED_URL + 'stations/radius/' + lat + '/' + lng + '/1/' + fuelType + '/price/' + config.GAS_FEED_KEY + '.json?', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body) // Show the HTML for the Google homepage. 
+    }
+  })
+}
+
+getGasPrices(37.7833, -122.4167, "reg");
+
 /**
 *  
 * Endpoint usage starts here, should be the only thing is this file
@@ -244,7 +255,6 @@ exports.index = function (req, res) {
 
     stripCarData(req, function (err, fuelData) {
 
-      console.log(fuelData);
 
       time = (( maxCost / 2.837 ) * Number(fuelData['Epa Combined Mpg']) * 90 );
 
