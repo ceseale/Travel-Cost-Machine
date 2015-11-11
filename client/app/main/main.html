@@ -2,7 +2,7 @@
   <h3>360 Traveling Cost Machine</h3>
   <md-button ng-click="selectCar()"class="md-raised md-primary" ng-disabled="carSelected">Car</md-button>
   <md-input-container id="cost">
-    <label>One-Way Trip Cost (USD)</label>
+    <label>One-Way Trip Cost</label>
     <input required type="number" step=".01" name="rate" ng-model="cost">
     <div  ng-messages="projectForm.rate.$error">
       <div ng-hide="okayReq" ng-message="required">Can't get too far with nothing ...</div>
@@ -11,7 +11,7 @@
     </div>
   </md-input-container>
 
-  <div class="box" flex="50" flex-md="100" layout="column">
+  <div class="box" flex="100" flex-md="100" layout="column">
   <fieldset class="standard" flex>
     <legend> {{current.type}} Options </legend>
     <div layout="row" layout-wrap>
@@ -57,7 +57,6 @@
 
   </fieldset>
   <md-button ng-click="reCal()"class="md-raised md-primary" ng-disabled="disableRecal">Recalculate Distance Costs</md-button>
-  <md-button ng-click="showAlert()"class="md-raised md-primary" >How this Works</md-button>
   </div>
   </md-whiteframe>
   

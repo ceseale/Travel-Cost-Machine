@@ -132,7 +132,7 @@ var getPolygons = function (center, time, resolution, network, carData , maxCost
         var xmin = bbox[0];
         var xmax = bbox[2];
         var interval = (xmax - xmin) / resolution;
-
+        // console.log(gridData)
         // var line = isolines(destinations, 'eta', resolution, [time]);
         var outData = { gridHeight: resolution + 1 , gridWidth: resolution + 1 , y0: gridData[0].y, x0: gridData[1].x, dx: -interval , dy: -interval, position:gridData }
         // console.log(gridData)
