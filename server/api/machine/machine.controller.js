@@ -25,7 +25,9 @@ var client = new EdmundsClient({ apiKey: config.EDMOUND_KEY });
 var getPolygons = function (center, time, resolution, network, carData , maxCost, done) {
 
   // compute bbox
-
+  if(!time){
+    time = 3000;
+  }
   var centerPt = point([center[0], center[1]]);
   var spokes = featureCollection([]);
 
@@ -66,7 +68,7 @@ var getPolygons = function (center, time, resolution, network, carData , maxCost
               targets.features[i].geometry.coordinates[1], targets.features[i].geometry.coordinates[0]
             ]
           ]
-      };
+      }; 
 
       osrm.route(query, function (err, res) {
           i++;
@@ -171,7 +173,7 @@ function getTripCost (length, carData, time) {
     return length / 1609.34;
   }
 
-  var com_mpg = +carData["Epa Combined Mpg"] ; // TODO: change to meters per gallon 
+  var com_mpg = +carData["Epa Combined Mpg"] ; 
   var city_mpg = +carData["Epa City Mpg"] ;
   var high_mpg = +carData["Epa Highway Mpg"] ;
   var t_cost = 0;
@@ -181,9 +183,12 @@ function getTripCost (length, carData, time) {
   } else if(city_mpg){
     cpg = 2.962;
     t_cost = cpg * ( metersToMiles(length) /city_mpg );
-  } else {
+  } else if(high_mpg){
     cpg = 3.064;
     t_cost = cpg  * ( metersToMiles(length) /city_mpg );
+  } else {
+    cpg = 2.962;
+    t_cost = cpg * ( metersToMiles(length) / 15);
   }
 
   return t_cost
@@ -227,17 +232,6 @@ function stripCarData ( req, callback ){
 
 }
 
-var getGasPrices = function(lat, lng, fuelType){
-
-  request( config.GAS_FEED_URL + 'stations/radius/' + lat + '/' + lng + '/1/' + fuelType + '/price/' + config.GAS_FEED_KEY + '.json?', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body) // Show the HTML for the Google homepage. 
-    }
-  })
-}
-
-getGasPrices(37.7833, -122.4167, "reg");
-
 /**
 *  
 * Endpoint usage starts here, should be the only thing is this file
@@ -245,6 +239,7 @@ getGasPrices(37.7833, -122.4167, "reg");
 */
 
 exports.index = function (req, res) {
+  console.log(req.body)
   var resolution = 25; // sample resolution
   var network = "null" ; 
   var time = 3000; // 300 second drivetime (5 minutes)
@@ -254,9 +249,9 @@ exports.index = function (req, res) {
   var maxCost = req.body.cost; 
 
     stripCarData(req, function (err, fuelData) {
+      console.log(fuelData)
 
-
-      time = (( maxCost / 2.837 ) * Number(fuelData['Epa Combined Mpg']) * 90 );
+      time = (( maxCost / 2.837 ) * Number(fuelData['Epa Combined Mpg'] || 15 ) * 90 );
 
       getPolygons(location, time, resolution, network , fuelData, maxCost, function(err, drivetime) {
         if(err) throw err;
@@ -279,7 +274,6 @@ exports.getMakes = function (req, res) {
 // Send all the Cars to the client
 exports.getCars = function (req, res) {
   var car = req.body;
-  console.log(car)
    client.getModelDetails( car , function (err, data) {
     res.send(JSON.stringify(data));
    })

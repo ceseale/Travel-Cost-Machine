@@ -227,7 +227,7 @@ angular.module('201510MvpApp')
    function getPolygons(coordinate){
   	vglLayer.clear()
 
-  	if($scope.cost >= 1 && $scope.cost <= 8 ){
+  	if($scope.cost >= 1 && $scope.cost <= 10 ){
    	  $scope.disableRecal = true ;
   		$http.post('/api/machines', {coordinate: coordinate , id: carId, cost: $scope.cost })
         .success(function(response) {
