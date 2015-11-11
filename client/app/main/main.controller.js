@@ -11,6 +11,7 @@ angular.module('201510MvpApp')
     $scope.disableRecal = false ;
     $scope.carSelected = true ;
     $scope.disableRecal = true ; // When on the app will do recalculation when new data is put in
+    $scope.gas_types = ['REG', 'MED', 'PREMIUM'];
     var carId = 11937;
 
 
@@ -22,6 +23,7 @@ angular.module('201510MvpApp')
 	 		$scope.userCar.model = '';
 	 		$scope.userCar.year = '';
 	 		$scope.userCar.style = '';
+      $scope.userCar.gas_type = '';
 
     }
 
@@ -97,7 +99,7 @@ angular.module('201510MvpApp')
       // Turning off recalcution
       $scope.disableRecal = false ;
 
-      if(cost < 1){
+      if(cost < .50){
         $scope.okayMin = false ;
         $scope.okayR = $scope.okayMax = true ;
       } else if (cost > 300){
@@ -227,12 +229,11 @@ angular.module('201510MvpApp')
    function getPolygons(coordinate){
   	vglLayer.clear()
 
-  	if($scope.cost >= 1 && $scope.cost <= 10 ){
+  	if($scope.cost >= 1 && $scope.cost <= 20 ){
    	  $scope.disableRecal = true ;
   		$http.post('/api/machines', {coordinate: coordinate , id: carId, cost: $scope.cost })
         .success(function(response) {
   		    var data = (response[0]);
-          console.log(data)
   		    var contour = makeContour(data, vglLayer);
   		    $scope.loading = false;
   		    $scope.disableRecal = true ;
@@ -243,7 +244,7 @@ angular.module('201510MvpApp')
   	    });
     	} else {
       	$scope.loading = false;
-      	if($scope.cost > 8 ){
+      	if($scope.cost > 20 ){
       		$scope.showAlert(undefined,'The cost value you entered too high', 'High Alert')
       	 }
         if($scope.cost < 1){ 
@@ -271,7 +272,7 @@ $scope.$watch('cost',function (cost){
 		$scope.okayMax = true;
 		$scope.okayReq = true;
 
-	} else if ( cost > 8 ){
+	} else if ( cost > 20 ){
 		$scope.okayMin = true;
 		$scope.okayMax = false;
 		$scope.okayReq = true;
@@ -416,6 +417,6 @@ $scope.currentPoint = [{
     	 $scope.showSimpleToast('Error Connecting to Server!!')
     });
 
-    $scope.reCal();
+    // $scope.reCal();
 
   });

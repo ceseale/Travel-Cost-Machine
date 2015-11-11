@@ -163,12 +163,22 @@ function decode (res) {
     return route;
 }
 
+function getGasPrice (type){
+  if(type.indexOf('reg')){
+    return 2.837;
+  } else if(type.indexOf('med')){
+    return 2.962;
+  } else {
+    return 3.064;
+  }
+}
+
 // Should using most recent car data for California to Calculate the trip cost
 
 function getTripCost (length, carData, time) {
   //cpg =: cost per gallon 
   var cpg = null;
-
+  (carData['fuelType']);
   var metersToMiles = function(length){
     return length / 1609.34;
   }
@@ -177,18 +187,27 @@ function getTripCost (length, carData, time) {
   var city_mpg = +carData["Epa City Mpg"] ;
   var high_mpg = +carData["Epa Highway Mpg"] ;
   var t_cost = 0;
+
   if(com_mpg){
-    cpg = 2.837;
+
+    cpg = getGasPrice(carData['fuelType']);
     t_cost = cpg * ( metersToMiles(length) /com_mpg );
+
   } else if(city_mpg){
-    cpg = 2.962;
+
+    cpg = getGasPrice(carData['fuelType']);
     t_cost = cpg * ( metersToMiles(length) /city_mpg );
+
   } else if(high_mpg){
-    cpg = 3.064;
+
+    cpg = getGasPrice(carData['fuelType']);
     t_cost = cpg  * ( metersToMiles(length) /city_mpg );
+
   } else {
+
     cpg = 2.962;
     t_cost = cpg * ( metersToMiles(length) / 15);
+
   }
 
   return t_cost
@@ -239,7 +258,6 @@ function stripCarData ( req, callback ){
 */
 
 exports.index = function (req, res) {
-  console.log(req.body)
   var resolution = 25; // sample resolution
   var network = "null" ; 
   var time = 3000; // 300 second drivetime (5 minutes)
@@ -249,7 +267,7 @@ exports.index = function (req, res) {
   var maxCost = req.body.cost; 
 
     stripCarData(req, function (err, fuelData) {
-      console.log(fuelData)
+
 
       time = (( maxCost / 2.837 ) * Number(fuelData['Epa Combined Mpg'] || 15 ) * 90 );
 
