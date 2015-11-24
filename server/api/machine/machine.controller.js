@@ -164,9 +164,9 @@ function decode (res) {
 }
 
 function getGasPrice (type){
-  if(type.indexOf('reg')){
+  if( type && type.indexOf('reg')){
     return 2.837;
-  } else if(type.indexOf('med')){
+  } else if(type && type.indexOf('med')){
     return 2.962;
   } else {
     return 3.064;
